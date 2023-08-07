@@ -1,6 +1,9 @@
 <template>
     <div class="grid grid-cols-4 gap-4 p-4 bg-gray-200 border-solid border-2 border-slate-500">
-        <Case v-for="(value, index) in gameCase" :key="index" :value="value" @keyPressed="keyPressed" />
+        <Case v-for="(value, index) in gameCase" 
+        :key="index"
+        :value="value"
+        @keyPressed="keyPressed" />
     </div>
 </template>
   
@@ -16,6 +19,7 @@ export default {
             gameCase: this.initgameCase(),
         };
     },
+
     methods: {
         // Cette méthode initialise le plateau de jeu avec 16 cases vides et ajoute deux tuiles de valeur 2
         initgameCase() {
@@ -30,7 +34,7 @@ export default {
             // Retourner le jeu
             return gameCase;
         },
-
+// decouper bien les actions 1 a 1, note tous, console.log
         addRandomTile(gameCase) {
 
             let emptyIndex = [];
@@ -48,7 +52,7 @@ export default {
             if (emptyIndex.length > 0) {
                 // Choisir un indice aléatoire parmi les indices des cases vides
                 let randomIndex = emptyIndex[Math.floor(Math.random() * emptyIndex.length)];
-                gameCase[randomIndex] = 2; // Je met 2 de base dans la case vide choisie
+                gameCase[randomIndex] = 2; // Je met 2 de base dans la case vide choisie peut etre un 4 aussi %plus rare
             }
         },
 
@@ -77,9 +81,11 @@ export default {
                             break;
                     }
 
-
+                    //une case ne peut pas fussioner sur le mm tour
                     if (0 <= nextIndex && nextIndex < gameCase.length) {
-                        // Si la case de destination n'est pas vide et que les valeurs des deux cases sont égales, on fusionne les deux cases
+                        // Si la case de destination n'est pas vide et que les valeurs des deux cases sont ==, on fusionne les deux cases
+                        //Si la condition précédente est vraie!  ca vérifie si la case à l'indice nextIndex 
+                        //dans gameCase n'est pas vide  et si elle a la même valeur que  la currentTile.
                         if (gameCase[nextIndex] !== 0 && gameCase[nextIndex] === currentTile) {
                             gameCase[index] = 0;
                             gameCase[nextIndex] *= 2;
