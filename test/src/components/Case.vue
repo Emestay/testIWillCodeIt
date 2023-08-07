@@ -1,5 +1,5 @@
 <template>
-    <div :class="caseClass" class="w-16 h-16 flex items-center justify-center text-lg font-bold">
+    <div :class="caseClass" class="w-32 h-32 flex items-center justify-center text-lg font-bold border-solid border-4 border-white">
         {{ value }}
     </div>
 </template>

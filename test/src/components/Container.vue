@@ -1,8 +1,6 @@
 <template>
-    <div class="grid grid-cols-4 gap-4 p-4 bg-gray-200">
-        <Case v-for="(value, index) in gameCase" 
-        :key="index" 
-        :value="value" />
+    <div class="grid grid-cols-4 gap-4 p-4 bg-gray-200 border-solid border-2 border-sky-500">
+        <Case v-for="(value, index) in gameCase" :key="index" :value="value" @keyPressed="keyPressed" />
     </div>
 </template>
   
@@ -52,8 +50,76 @@ export default {
                 let randomIndex = emptyIndex[Math.floor(Math.random() * emptyIndex.length)];
                 gameCase[randomIndex] = 2; // Je met 2 de base dans la case vide choisie
             }
+        },
+
+        moveCase(gameCase, direction) {
+
+            for (let index = 0; index < gameCase.length; index++) {
+
+                const currentTile = gameCase[index];
+
+
+                if (currentTile !== 0) {
+                    let nextIndex = index;
+
+                    switch (direction) {
+                        case 'ArrowLeft':
+                            nextIndex -= 1;
+                            break;
+                        case 'ArrowRight':
+                            nextIndex += 1;
+                            break;
+                        case 'ArrowUp':
+                            nextIndex -= 4;
+                            break;
+                        case 'ArrowDown':
+                            nextIndex += 4;
+                            break;
+                    }
+
+
+                    if (0 <= nextIndex && nextIndex < gameCase.length) {
+                        // Si la case de destination n'est pas vide et que les valeurs des deux cases sont égales, on fusionne les deux cases
+                        if (gameCase[nextIndex] !== 0 && gameCase[nextIndex] === currentTile) {
+                            gameCase[index] = 0;
+                            gameCase[nextIndex] *= 2;
+
+                        } else {
+                            gameCase[index] = 0;
+                            gameCase[nextIndex] = currentTile;
+                        }
+                    }
+                }
+            }
+        },
+
+        keyPressed(e) {
+            switch (e.key) {
+                case "ArrowLeft":
+                    this.moveCase(this.gameCase, "ArrowLeft");
+                    break;
+                case "ArrowRight":
+                    this.moveCase(this.gameCase, "ArrowRight");
+                    break;
+                case "ArrowUp":
+                    this.moveCase(this.gameCase, "ArrowUp");
+                    break;
+                case "ArrowDown":
+                    this.moveCase(this.gameCase, "ArrowDown");
+                    break;
+                default:
+                    break;
+            }
+
+            if (this.gameCase.some(tile => tile === 0)) {
+                this.addRandomTile(this.gameCase);
+            }
         }
-    }
+    },
+    mounted() {
+        // Ajoute un listener pour les touches pressées dès que le composant est monté
+        window.addEventListener('keydown', this.keyPressed);
+    },
 
 }
 
