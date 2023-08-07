@@ -1,5 +1,5 @@
 <template>
-    <div class="grid grid-cols-4 gap-4 p-4 bg-gray-200 border-solid border-2 border-sky-500">
+    <div class="grid grid-cols-4 gap-4 p-4 bg-gray-200 border-solid border-2 border-slate-500">
         <Case v-for="(value, index) in gameCase" :key="index" :value="value" @keyPressed="keyPressed" />
     </div>
 </template>
@@ -92,7 +92,7 @@ export default {
                 }
             }
         },
-
+        //touches directionelle
         keyPressed(e) {
             switch (e.key) {
                 case "ArrowLeft":
@@ -110,7 +110,7 @@ export default {
                 default:
                     break;
             }
-
+            //si une case a 0 restante logique de fin de game
             if (this.gameCase.some(tile => tile === 0)) {
                 this.addRandomTile(this.gameCase);
             }
