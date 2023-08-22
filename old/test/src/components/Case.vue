@@ -1,8 +1,9 @@
 <template>
-    <div :class="caseClass" class="w-32 h-32 flex items-center justify-center text-lg font-bold border-solid border-4 border-white">
+    <div :class="caseClass" class="w-32 h-32 m-2 flex items-center justify-center text-xl font-extrabold text-white rounded-xl shadow-lg bg-gradient-to-br border-4 border-transparent transition-all duration-300">
         {{ value }}
     </div>
 </template>
+
 
 <script>
 export default {
